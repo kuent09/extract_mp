@@ -1,0 +1,55 @@
+---
+spec-version: v1.0
+name: proserv/extract_mp
+version: 1.0.0
+display-name: Extract microplots by location
+description: Extract microplots on an area of interest
+docker-image: registry-external.admin-tool.delair-stack.com/kuent/extract_mp:v1.0
+instance-type: small
+volume-size: 20
+groups: [Agriculture]
+inputs:
+  - name: microplots
+    display-name: Microplots vector
+    description: Microplots vector to extract selected microplots
+    kind: dataset
+    schema:
+      type: vector
+    required: true
+  - name: polygon
+    display-name: Polygon vector
+    description: Area to extract microplots entities
+    kind: dataset
+    schema:
+      type: vector
+    required: true
+parameters:
+  - name: output_file_name
+    display-name: New file name
+    description: Name of selected microplots
+    schema:
+      type: string
+    required: true
+  - name: predicate
+    display-name: Binary predicate
+    description: Valid values are determined by the spatial index used (default intersects)
+    schema:
+      type: string
+      enum:
+        - contains
+        - crosses
+        - intersects
+        - within
+        - touches
+        - overlaps
+        - covers
+        - contains_properly
+    required: true
+deliverables:
+  - name: selected_microplots
+    display-name: Selected microplots
+    description: Microplots extracted by location
+    kind: dataset
+    schema:
+      type: vector
+    required: true
